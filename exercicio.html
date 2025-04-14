@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard com Chart.js</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    h1 {
+      text-align: center;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      align-items: center;
+    }
+    .chart-container {
+      width: 80%;
+      max-width: 800px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>Dashboard - Temperatura e Umidade</h1>
+  <div class="container">
+    <!-- linhas  -->
+    <div class="chart-container">
+      <canvas id="graficoLinha"></canvas>
+    </div>
+
+    <!-- barras  -->
+    <div class="chart-container">
+      <canvas id="graficoBarra"></canvas>
+    </div>
+  </div>
+
+  <script>
+    // dados linhas
+    const rotulosLinha = ["12:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
+    const dadosTemperatura = [30, 29, 28, 25, 22, 23];
+    const dadosUmidade = [80, 82, 80, 85, 80, 83];
+
+    const contextoLinha = document.getElementById('graficoLinha').getContext('2d');
+    const graficoLinha = new Chart(contextoLinha, {
+      type: 'line',
+      data: {
+        labels: rotulosLinha,
+        datasets: [
+          {
+            label: 'Temperatura (°C)',
+            data: dadosTemperatura,
+            borderColor: 'rgba(255, 99, 132, 1)',
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            fill: false,
+            tension: 0.1
+          },
+          {
+            label: 'Umidade (%)',
+            data: dadosUmidade,
+            borderColor: 'rgba(54, 162, 235, 1)',
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            fill: false,
+            tension: 0.1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Gráfico de Linhas - Temperatura e Umidade'
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    // dados barras
+    const rotulosBarra = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho"];
+    const dadosTemperaturaMedia = [22, 24, 27, 23, 20, 18];
+    const dadosUmidadeMedia = [90, 89, 93, 87, 88, 82];
+
+    const contextoBarra = document.getElementById('graficoBarra').getContext('2d');
+    const graficoBarra = new Chart(contextoBarra, {
+      type: 'bar',
+      data: {
+        labels: rotulosBarra,
+        datasets: [
+          {
+            label: 'Temperatura Média (°C)',
+            data: dadosTemperaturaMedia,
+            backgroundColor: 'rgba(255, 159, 64, 0.6)',
+            borderColor: 'rgba(255, 159, 64, 1)',
+            borderWidth: 1
+          },
+          {
+            label: 'Umidade Média (%)',
+            data: dadosUmidadeMedia,
+            backgroundColor: 'rgba(75, 192, 192, 0.6)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Gráfico de Barras - Temperatura e Umidade Média'
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
